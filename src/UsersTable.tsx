@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import get from './mockApi';
 import { css } from 'glamor'
+import debounce from 'lodash/debounce'
 
 
 const sticky = css({ position: 'sticky', top: 0, zIndex: 100, backgroundColor: 'white' })
@@ -8,17 +9,29 @@ const sticky = css({ position: 'sticky', top: 0, zIndex: 100, backgroundColor: '
 const UsersTable = () => {
 
   const [users, setUsers] = useState([])
+
+  const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const response = JSON.parse(await get(1, ''))
-      setIsLoading(false)
-      setUsers(response.results)
+  const getUsers = async (page: number) => {
+    const response = JSON.parse(await get(page, ''))
+    setIsLoading(false)
+
+    const newUsers = [...users, ...response.results] as never[]
+    setUsers(newUsers)
+  }
+
+
+  window.onscroll = debounce(() => {
+    // todo this 0.7 can be improved
+    if (window.innerHeight + document.documentElement.scrollTop > document.documentElement.offsetHeight * 0.7) {
+      getUsers(page + 1)
+      setPage(page + 1)
     }
+  }, 50)
 
-    getUsers()
-
+  useEffect(() => {
+    getUsers(page)
   }, [])
 
 
@@ -42,7 +55,7 @@ const UsersTable = () => {
 
   const rows = () => users.map(
 
-    (user: any) => <tr key={user.id}>
+    (user: any) => <tr key={user.name.first}>
       <td>
         <img src={user.picture.thumbnail} />
       </td>
@@ -62,12 +75,12 @@ const UsersTable = () => {
   )
 
   return <div>
-
     <table {...css({ position: 'relative' })}>
       {header}
       <tbody>
-        {isLoading ? <div>loading...</div> : rows()}
+        {rows()}
       </tbody>
+      {isLoading && <div>loading...</div>}
     </table>
 
   </div>
