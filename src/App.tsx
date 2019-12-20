@@ -1,11 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom"
+import UsersTable from './UsersTable';
+import Settings from './Settings';
+
+
+
+
 
 const App: React.FC = () => {
   return (
-    <div>
-      initial
-    </div>
+    <BrowserRouter>
+      <div>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/settings">Settings</Link>
+          </li>
+        </ul>
+      </div>
+      <hr />
+
+      <Switch>
+        <Route exact path="/">
+          <UsersTable />
+        </Route>
+        <Route exact path="/settings">
+          <Settings />
+        </Route>
+
+      </Switch>
+    </BrowserRouter>
   );
 }
 
