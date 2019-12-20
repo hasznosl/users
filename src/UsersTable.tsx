@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import get from './mockApi';
+import { css } from 'glamor'
+
+
+const sticky = css({ position: 'sticky', top: 0, zIndex: 100, backgroundColor: 'white' })
 
 const UsersTable = () => {
 
@@ -18,7 +22,25 @@ const UsersTable = () => {
   }, [])
 
 
-  const renderRows = () => users.map(
+  const header = <tr>
+    <th {...sticky}>
+      picture
+  </th>
+    <th {...sticky}>
+      first name
+  </th>
+    <th {...sticky}>
+      last name
+  </th>
+    <th {...sticky}>
+      username
+  </th>
+    <th {...sticky}>
+      email
+  </th>
+  </tr>
+
+  const rows = () => users.map(
 
     (user: any) => <tr key={user.id}>
       <td>
@@ -41,26 +63,10 @@ const UsersTable = () => {
 
   return <div>
 
-    <table>
-      <tr>
-        <th>
-          picture
-        </th>
-        <th>
-          first name
-        </th>
-        <th>
-          last name
-        </th>
-        <th>
-          username
-        </th>
-        <th>
-          email
-        </th>
-      </tr>
+    <table {...css({ position: 'relative' })}>
+      {header}
       <tbody>
-        {isLoading ? <div>loading...</div> : renderRows()}
+        {isLoading ? <div>loading...</div> : rows()}
       </tbody>
     </table>
 
