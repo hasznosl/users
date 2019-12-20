@@ -21,7 +21,7 @@ const BATCH_SIZE = 50
 const get = (pageNr: number, searchTerm: string): Promise<string> => new Promise((resolve, reject) => {
   setTimeout(() => {
 
-    const response = `{"results": [${usersArray
+    const response = `{"results": [${usersArray.filter(user => user.includes(searchTerm))
       .slice((pageNr - 1) * BATCH_SIZE, pageNr * BATCH_SIZE).join(', ')
       }],"info": {"seed": "7d4db9727474515a","results": 1,"page": 1,"version": "1.1"}}`
     resolve(
