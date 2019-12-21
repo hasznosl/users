@@ -4,6 +4,8 @@ import axios from 'axios'
 import debounce from 'lodash/debounce'
 import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from './styles';
 import NationalityContext from './NationalityContext';
+import { css } from 'glamor';
+import ReactModal from 'react-modal';
 
 
 const UsersTable = () => {
@@ -12,6 +14,8 @@ const UsersTable = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
+  const [userModalVisible, setUserModalVisible] = useState(false)
+  const [userModalPosition, setUserModalPosition] = useState(0)
 
   const { nationality } = useContext(NationalityContext)
 
@@ -22,10 +26,9 @@ const UsersTable = () => {
     setUsers(newUsers)
   }
 
-
   window.onscroll = debounce(() => {
-    // todo this 0.7 can be improved
-    if (window.innerHeight + document.documentElement.scrollTop > document.documentElement.offsetHeight * 0.7) {
+    // todo this 0.9 can be improved
+    if (window.innerHeight + document.documentElement.scrollTop > document.documentElement.offsetHeight * 0.9) {
       getUsers(page + 1)
       setPage(page + 1)
     }
@@ -59,8 +62,10 @@ const UsersTable = () => {
   const rows = (searchTerm: string) => users.filter((user: any) =>
     `${user.name.first}${user.name.last}`.toLowerCase().includes(searchTerm.toLowerCase())
   ).map(
-
-    (user: any) => <tr key={user.email + user.login.username}>
+    (user: any) => <tr key={user.email + user.login.username} {...css({ cursor: 'pointer' })} onClick={(e) => {
+      setUserModalPosition(e.pageY)
+      setUserModalVisible(true)
+    }}>
       <td>
         <img src={user.picture.thumbnail} />
       </td>
@@ -80,6 +85,12 @@ const UsersTable = () => {
   )
 
   return <div {...positionRelative}>
+    <ReactModal isOpen={userModalVisible}
+      style={{ overlay: { width: 500, height: 500, position: 'absolute', top: userModalPosition, left: 0 } }}
+      shouldCloseOnOverlayClick={true}
+    >
+      <button onClick={() => setUserModalVisible(false)}>Close Modal</button>
+    </ReactModal>
     <div {...sticky(NAV_HEIGHT)}>
       <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
     </div>
@@ -91,7 +102,7 @@ const UsersTable = () => {
     </table>
     {isLoading && <div>loading...</div>}
 
-  </div>
+  </div >
 }
 
 export default UsersTable
