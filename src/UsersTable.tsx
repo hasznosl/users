@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import get from './mockApi';
-import { css } from 'glamor'
+// import get from './mockApi';
+import axios from 'axios'
 import debounce from 'lodash/debounce'
+import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from './styles';
 
 
-const sticky = css({ position: 'sticky', top: 0, zIndex: 100, backgroundColor: 'white' })
-
-const UsersTable = () => {
+const UsersTable = ({ nationality }: { nationality: string | null }) => {
 
   const [users, setUsers] = useState([])
-
+  const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
 
   const getUsers = async (page: number) => {
-    const response = JSON.parse(await get(page, ''))
+    const response = await axios.get(`https://randomuser.me/api/?page=${page}&results=50&seed=jggjghjkgj${nationality ? `&nat=${nationality}` : ''}`) as any
     setIsLoading(false)
-
-    const newUsers = [...users, ...response.results] as never[]
+    const newUsers = [...users, ...response.data.results] as never[]
     setUsers(newUsers)
   }
 
@@ -35,27 +33,31 @@ const UsersTable = () => {
   }, [])
 
 
-  const header = <tr>
-    <th {...sticky}>
-      picture
+  const header = <thead>
+    <tr>
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
+        picture
   </th>
-    <th {...sticky}>
-      first name
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
+        first name
   </th>
-    <th {...sticky}>
-      last name
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
+        last name
   </th>
-    <th {...sticky}>
-      username
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
+        username
   </th>
-    <th {...sticky}>
-      email
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
+        email
   </th>
-  </tr>
+    </tr>
+  </thead>
 
-  const rows = () => users.map(
+  const rows = (searchTerm: string) => users.filter((user: any) =>
+    `${user.name.first}${user.name.last}`.toLowerCase().includes(searchTerm.toLowerCase())
+  ).map(
 
-    (user: any) => <tr key={user.name.first}>
+    (user: any) => <tr key={user.email + user.login.username}>
       <td>
         <img src={user.picture.thumbnail} />
       </td>
@@ -74,14 +76,17 @@ const UsersTable = () => {
     </tr>
   )
 
-  return <div>
-    <table {...css({ position: 'relative' })}>
+  return <div {...positionRelative}>
+    <div {...sticky(NAV_HEIGHT)}>
+      <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+    </div>
+    <table>
       {header}
       <tbody>
-        {rows()}
+        {rows(searchTerm)}
       </tbody>
-      {isLoading && <div>loading...</div>}
     </table>
+    {isLoading && <div>loading...</div>}
 
   </div>
 }

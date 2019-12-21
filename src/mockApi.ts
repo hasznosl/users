@@ -1,3 +1,5 @@
+// this mock api is used whenever randomusers is down
+
 
 const randomString = () => Math.random().toString(16).substring(2, 15)
 
