@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom"
-import UsersTable from './UsersTable';
-import Settings from './Settings';
 import { positionRelative, sticky, NAV_HEIGHT } from './styles';
 import { css } from 'glamor';
 import NationalityContext from './NationalityContext';
+import loadable from '@loadable/component'
+const UsersTable = loadable(() => import('./UsersTable'))
+const Settings = loadable(() => import('./Settings'))
 
 const App: React.FC = () => {
 

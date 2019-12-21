@@ -23,12 +23,14 @@ const UserModal = ({
   }}
   shouldCloseOnOverlayClick={true}
 >
-  <li>street: {user.location.street.name}</li>
-  <li>city: {user.location.city}</li>
-  <li>state: {user.location.state}</li>
-  <li>postcode: {user.location.postcode}</li>
-  <li>phone: {user.phone}</li>
-  <li>cell: {user.cell}</li>
+  <ul>
+    <li>street: {user.location.street.name}</li>
+    <li>city: {user.location.city}</li>
+    <li>state: {user.location.state}</li>
+    <li>postcode: {user.location.postcode}</li>
+    <li>phone: {user.phone}</li>
+    <li>cell: {user.cell}</li>
+  </ul>
   <button onClick={() => setVisible(false)}>Close Modal</button>
 </ReactModal>
 

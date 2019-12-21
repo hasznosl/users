@@ -2,11 +2,10 @@ import React, { useEffect, useState, useContext } from 'react'
 // import get from './mockApi';
 import axios from 'axios'
 import debounce from 'lodash/debounce'
-import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from './styles';
-import NationalityContext from './NationalityContext';
-import { css } from 'glamor';
-import UserModal from './UserModal';
-
+import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from './styles'
+import NationalityContext from './NationalityContext'
+import { css } from 'glamor'
+import UserModal from './UserModal'
 
 const UsersTable = () => {
 
@@ -87,8 +86,6 @@ const UsersTable = () => {
       </td>
     </tr>
   )
-
-  console.log({ userModalUser })
 
   return <div {...positionRelative}>
     <UserModal
