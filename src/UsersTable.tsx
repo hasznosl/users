@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce'
 import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from './styles';
 import NationalityContext from './NationalityContext';
 import { css } from 'glamor';
-import ReactModal from 'react-modal';
+import UserModal from './UserModal';
 
 
 const UsersTable = () => {
@@ -15,7 +15,9 @@ const UsersTable = () => {
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [userModalVisible, setUserModalVisible] = useState(false)
-  const [userModalPosition, setUserModalPosition] = useState(0)
+  const [userModalPositionX, setUserModalPositionX] = useState(0)
+  const [userModalPositionY, setUserModalPositionY] = useState(0)
+  const [userModalUser, setUserModalUser] = useState(null)
 
   const { nationality } = useContext(NationalityContext)
 
@@ -63,7 +65,9 @@ const UsersTable = () => {
     `${user.name.first}${user.name.last}`.toLowerCase().includes(searchTerm.toLowerCase())
   ).map(
     (user: any) => <tr key={user.email + user.login.username} {...css({ cursor: 'pointer' })} onClick={(e) => {
-      setUserModalPosition(e.pageY)
+      setUserModalPositionY(e.pageY)
+      setUserModalPositionX(e.pageX)
+      setUserModalUser(user)
       setUserModalVisible(true)
     }}>
       <td>
@@ -84,13 +88,16 @@ const UsersTable = () => {
     </tr>
   )
 
+  console.log({ userModalUser })
+
   return <div {...positionRelative}>
-    <ReactModal isOpen={userModalVisible}
-      style={{ overlay: { width: 500, height: 500, position: 'absolute', top: userModalPosition, left: 0 } }}
-      shouldCloseOnOverlayClick={true}
-    >
-      <button onClick={() => setUserModalVisible(false)}>Close Modal</button>
-    </ReactModal>
+    <UserModal
+      positionX={userModalPositionX}
+      positionY={userModalPositionY}
+      setVisible={setUserModalVisible}
+      visible={userModalVisible}
+      user={userModalUser}
+    />
     <div {...sticky(NAV_HEIGHT)}>
       <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
     </div>
