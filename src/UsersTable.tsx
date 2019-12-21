@@ -7,6 +7,10 @@ import NationalityContext from './NationalityContext'
 import { css } from 'glamor'
 import UserModal from './UserModal'
 
+
+const MAX_CATALOG_SIZE = 1000
+const NEXT_BATCH_SIZE = 50
+
 const UsersTable = () => {
 
   const [users, setUsers] = useState([])
@@ -21,7 +25,10 @@ const UsersTable = () => {
   const { nationality } = useContext(NationalityContext)
 
   const getUsers = async (page: number) => {
-    const response = await axios.get(`https://randomuser.me/api/?page=${page}&results=50&seed=jggjghjkgj${nationality ? `&nat=${nationality}` : ''}`) as any
+    if (users.length >= MAX_CATALOG_SIZE) {
+      return null
+    }
+    const response = await axios.get(`https://randomuser.me/api/?page=${page}&results=${NEXT_BATCH_SIZE}&seed=jggjghjkgj${nationality ? `&nat=${nationality}` : ''}`) as any
     setIsLoading(false)
     const newUsers = [...users, ...response.data.results] as never[]
     setUsers(newUsers)
@@ -87,6 +94,7 @@ const UsersTable = () => {
     </tr>
   )
 
+
   return <div {...positionRelative}>
     <UserModal
       positionX={userModalPositionX}
@@ -105,7 +113,7 @@ const UsersTable = () => {
       </tbody>
     </table>
     {isLoading && <div>loading...</div>}
-
+    {users.length >= MAX_CATALOG_SIZE && <div>End of users catalog</div>}
   </div >
 }
 

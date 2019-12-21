@@ -14,8 +14,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter {...positionRelative}>
       <div {...sticky(0)} {...css({ height: NAV_HEIGHT })}>
-        <Link to="/">Home</Link> |
-        <Link to="/settings">Settings</Link>
+        <Link to="/">Home</Link> | <Link to="/settings">Settings</Link>
         <hr />
       </div>
       <NationalityContext.Provider value={{ nationality, setNationality }}>
