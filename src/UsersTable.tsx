@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 // import get from './mockApi';
 import axios from 'axios'
 import debounce from 'lodash/debounce'
 import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from './styles';
+import NationalityContext from './NationalityContext';
 
 
-const UsersTable = ({ nationality }: { nationality: string | null }) => {
+const UsersTable = () => {
 
   const [users, setUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
+
+  const { nationality } = useContext(NationalityContext)
 
   const getUsers = async (page: number) => {
     const response = await axios.get(`https://randomuser.me/api/?page=${page}&results=50&seed=jggjghjkgj${nationality ? `&nat=${nationality}` : ''}`) as any

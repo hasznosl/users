@@ -1,7 +1,11 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { useContext } from 'react'
+import NationalityContext from './NationalityContext';
 
-const Settings = ({ nationality, setNationality }:
-  { nationality: string | null, setNationality: Dispatch<SetStateAction<any>> }) => <div>nationality:
+const Settings = () => {
+
+  const { nationality, setNationality } = useContext(NationalityContext)
+
+  return <div>nationality:
     <select value={nationality || ''} onChange={(e) => setNationality(e.target.value)}>
       <option value="CH">CH</option>
       <option value="ES">ES</option>
@@ -9,5 +13,6 @@ const Settings = ({ nationality, setNationality }:
       <option value="GB">GB</option>
     </select>
   </div>
+}
 
 export default Settings
