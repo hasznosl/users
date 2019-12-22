@@ -1,17 +1,38 @@
 import React, { useContext } from 'react'
 import NationalityContext from './NationalityContext';
+import NationalityChekbox from './NationalityCheckbox';
 
 const Settings = () => {
 
-  const { nationality, setNationality } = useContext(NationalityContext)
+  const { nationalities, setNationalities } = useContext(NationalityContext)
 
-  return <div>nationality:
-    <select value={nationality || ''} onChange={(e) => setNationality(e.target.value)}>
-      <option value="CH">CH</option>
-      <option value="ES">ES</option>
-      <option value="FR">FR</option>
-      <option value="GB">GB</option>
-    </select>
+  const checked = (nat: string) => !!nationalities.find(nationality => nationality === nat)
+
+  return <div>
+    <NationalityChekbox
+      nationality="CH"
+      isChecked={checked('CH')}
+      onSet={() => setNationalities(nationalities.filter(nationality => nationality !== 'CH'))}
+      onUnset={() => setNationalities([...nationalities, 'CH'])}
+    />
+    <NationalityChekbox
+      nationality="FR"
+      isChecked={checked('FR')}
+      onSet={() => setNationalities(nationalities.filter(nationality => nationality !== 'FR'))}
+      onUnset={() => setNationalities([...nationalities, 'FR'])}
+    />
+    <NationalityChekbox
+      nationality="ES"
+      isChecked={checked('ES')}
+      onSet={() => setNationalities(nationalities.filter(nationality => nationality !== 'ES'))}
+      onUnset={() => setNationalities([...nationalities, 'ES'])}
+    />
+    <NationalityChekbox
+      nationality="GB"
+      isChecked={checked('GB')}
+      onSet={() => setNationalities(nationalities.filter(nationality => nationality !== 'GB'))}
+      onUnset={() => setNationalities([...nationalities, 'GB'])}
+    />
   </div>
 }
 

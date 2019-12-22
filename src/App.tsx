@@ -9,15 +9,15 @@ const Settings = loadable(() => import('./Settings'))
 
 const App: React.FC = () => {
 
-  const [nationality, setNationality] = useState(null)
-
+  const [nationalities, setNationalities] = useState([])
+  console.log({ nationalities })
   return (
     <BrowserRouter {...positionRelative}>
       <div {...sticky(0)} {...css({ height: NAV_HEIGHT })}>
         <Link to="/">Home</Link> | <Link to="/settings">Settings</Link>
         <hr />
       </div>
-      <NationalityContext.Provider value={{ nationality, setNationality }}>
+      <NationalityContext.Provider value={{ nationalities, setNationalities }}>
         <Switch>
           <Route exact path="/">
             <UsersTable />

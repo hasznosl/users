@@ -6,6 +6,7 @@ import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from './styles'
 import NationalityContext from './NationalityContext'
 import { css } from 'glamor'
 import UserModal from './UserModal'
+import nationalitiesToQueryString from './nationalitiesToQueryString';
 
 
 const MAX_CATALOG_SIZE = 1000
@@ -22,13 +23,16 @@ const UsersTable = () => {
   const [userModalPositionY, setUserModalPositionY] = useState(0)
   const [userModalUser, setUserModalUser] = useState(null)
 
-  const { nationality } = useContext(NationalityContext)
+  const { nationalities } = useContext(NationalityContext)
 
   const getUsers = async (page: number) => {
     if (users.length >= MAX_CATALOG_SIZE) {
       return null
     }
-    const response = await axios.get(`https://randomuser.me/api/?page=${page}&results=${NEXT_BATCH_SIZE}&seed=jggjghjkgj${nationality ? `&nat=${nationality}` : ''}`) as any
+    const response = await axios.get(`https://randomuser.me/api/?page=${page}
+    &results=${NEXT_BATCH_SIZE}
+    &seed=jggjghjkgj${
+      nationalitiesToQueryString(nationalities)}`) as any
     setIsLoading(false)
     const newUsers = [...users, ...response.data.results] as never[]
     setUsers(newUsers)
@@ -49,21 +53,11 @@ const UsersTable = () => {
 
   const header = <thead>
     <tr>
-      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
-        picture
-  </th>
-      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
-        first name
-  </th>
-      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
-        last name
-  </th>
-      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
-        username
-  </th>
-      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>
-        email
-  </th>
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>picture</th>
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>first name</th>
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>last name</th>
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>username</th>
+      <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>email</th>
     </tr>
   </thead>
 
