@@ -1,41 +1,26 @@
 import React, { useContext } from 'react'
 import NationalityContext from '../contexts/NationalityContext';
 import NationalityChekbox from '../components/NationalityCheckbox';
+import { css } from 'glamor';
 
-
-
+const selectableNationalities = ['CH', 'FR', 'ES', 'GB']
 
 const Settings = () => {
-
   const { nationalities, setNationalities } = useContext(NationalityContext)
-
   const checked = (nat: string) => !!nationalities.find(nationality => nationality === nat)
 
-  return <div>
-    <NationalityChekbox
-      nationality="CH"
-      isChecked={checked('CH')}
-      onSet={() => setNationalities(nationalities.filter(nationality => nationality !== 'CH'))}
-      onUnset={() => setNationalities([...nationalities, 'CH'])}
-    />
-    <NationalityChekbox
-      nationality="FR"
-      isChecked={checked('FR')}
-      onSet={() => setNationalities(nationalities.filter(nationality => nationality !== 'FR'))}
-      onUnset={() => setNationalities([...nationalities, 'FR'])}
-    />
-    <NationalityChekbox
-      nationality="ES"
-      isChecked={checked('ES')}
-      onSet={() => setNationalities(nationalities.filter(nationality => nationality !== 'ES'))}
-      onUnset={() => setNationalities([...nationalities, 'ES'])}
-    />
-    <NationalityChekbox
-      nationality="GB"
-      isChecked={checked('GB')}
-      onSet={() => setNationalities(nationalities.filter(nationality => nationality !== 'GB'))}
-      onUnset={() => setNationalities([...nationalities, 'GB'])}
-    />
+  return <div {...css({ width: 100, })}>
+    {selectableNationalities.map(nat =>
+      <div {...css({ margin: '0px 10px 0px 10px', height: 30, })}>
+        <NationalityChekbox
+          key={nat}
+          nationality={nat}
+          isChecked={checked(nat)}
+          onSet={() => setNationalities(nationalities.filter(nationality => nationality !== nat))}
+          onUnset={() => setNationalities([...nationalities, nat])}
+        />
+      </div>
+    )}
   </div>
 }
 

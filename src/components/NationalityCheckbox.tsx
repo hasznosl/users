@@ -1,4 +1,5 @@
 import React from 'react'
+import { css } from 'glamor';
 
 const NationalityChekbox = (
   { nationality,
@@ -10,20 +11,31 @@ const NationalityChekbox = (
       isChecked: boolean
       onSet: () => void
       onUnset: () => void
-    }) => <>
-    <div>{nationality}</div>
-    <input
-      type="checkbox"
-      checked={isChecked}
-      onChange={() => {
+    }) => <div
+      {...css({
+        width: '100%',
+        display: 'flex',
+        direction: 'row',
+        alignItems: 'start',
+        justifyContent: 'space-between',
+        cursor: 'pointer',
+      })}
+      onClick={() => {
         if (isChecked) {
           onSet()
         } else {
           onUnset()
         }
       }}
+
+    >
+    <input
+      type="checkbox"
+      checked={isChecked}
+      {...css({ cursor: 'pointer' })}
     />
-  </>
+    <div>{nationality}</div>
+  </div>
 
 
 export default NationalityChekbox
