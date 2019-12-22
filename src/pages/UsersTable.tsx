@@ -1,8 +1,8 @@
 import React, { useState, } from 'react'
-// import get from './mockApi';
 import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from '../utils/styles'
 import { css } from 'glamor'
 import UserModal from '../components/UserModal'
+import UserRow from '../components/UserRow';
 import isSelectedUser from '../utils/isSelectedUser'
 
 
@@ -18,7 +18,6 @@ const UsersTable = ({ users, maxCatalogueSize, isLoading }: {
   const [userModalPositionY, setUserModalPositionY] = useState(0)
   const [userModalUser, setUserModalUser] = useState(null)
 
-
   const header = <thead>
     <tr>
       <th {...sticky(NAV_HEIGHT + ROW_HEIGHT)}>picture</th>
@@ -29,49 +28,22 @@ const UsersTable = ({ users, maxCatalogueSize, isLoading }: {
     </tr>
   </thead>
 
+
   const rows = (searchTerm: string) => users.filter((user: any) => `${user.name.first}${user.name.last}`
     .toLowerCase().includes(searchTerm.toLowerCase())
   ).map(
-    (user: any) => <tr
+    (user: any) => <UserRow
+      user={user}
       key={user.email + user.login.username}
-      {...css({
-        cursor: 'pointer', backgroundColor: isSelectedUser(userModalUser, user)
-          ? '#F0F0F0' : 'white'
-      })}
-      onClick={(e) => {
+      backgroundColor={isSelectedUser(userModalUser, user)
+        ? '#F0F0F0' : 'white'}
+      onClick={(e: any) => {
         setUserModalPositionY(e.pageY)
         setUserModalPositionX(e.pageX)
         setUserModalUser(user)
         setUserModalVisible(true)
-      }}>
-      <td {...css({
-        border: '1px solid black'
-      })}>
-        <img src={user.picture.thumbnail} />
-      </td>
-      <td {...css({
-        border: '1px solid black'
-      })}>
-        {user.name.first}
-      </td>
-      <td {...css({
-        border: '1px solid black'
-      })}>
-        {user.name.last}
-      </td>
-      <td {...css({
-        border: '1px solid black'
-      })}>
-        {user.login.username}
-      </td>
-      <td {...css({
-        border: '1px solid black'
-      })}>
-        {user.email}
-      </td>
-    </tr>
+      }} />
   )
-
 
   return <div {...positionRelative}>
     <UserModal
