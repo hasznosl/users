@@ -6,7 +6,8 @@ import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from './styles'
 import NationalityContext from './NationalityContext'
 import { css } from 'glamor'
 import UserModal from './UserModal'
-import nationalitiesToQueryString from './nationalitiesToQueryString';
+import nationalitiesToQueryString from './nationalitiesToQueryString'
+import isSelectedUser from './isSelectedUser'
 
 
 const MAX_CATALOG_SIZE = 1000
@@ -64,25 +65,41 @@ const UsersTable = () => {
   const rows = (searchTerm: string) => users.filter((user: any) =>
     `${user.name.first}${user.name.last}`.toLowerCase().includes(searchTerm.toLowerCase())
   ).map(
-    (user: any) => <tr key={user.email + user.login.username} {...css({ cursor: 'pointer' })} onClick={(e) => {
-      setUserModalPositionY(e.pageY)
-      setUserModalPositionX(e.pageX)
-      setUserModalUser(user)
-      setUserModalVisible(true)
-    }}>
-      <td>
+    (user: any) => <tr
+      key={user.email + user.login.username}
+      {...css({
+        cursor: 'pointer', backgroundColor: isSelectedUser(userModalUser, user)
+          ? '#F0F0F0' : 'white'
+      })}
+      onClick={(e) => {
+        setUserModalPositionY(e.pageY)
+        setUserModalPositionX(e.pageX)
+        setUserModalUser(user)
+        setUserModalVisible(true)
+      }}>
+      <td {...css({
+        border: '1px solid black'
+      })}>
         <img src={user.picture.thumbnail} />
       </td>
-      <td>
+      <td {...css({
+        border: '1px solid black'
+      })}>
         {user.name.first}
       </td>
-      <td>
+      <td {...css({
+        border: '1px solid black'
+      })}>
         {user.name.last}
       </td>
-      <td>
+      <td {...css({
+        border: '1px solid black'
+      })}>
         {user.login.username}
       </td>
-      <td>
+      <td {...css({
+        border: '1px solid black'
+      })}>
         {user.email}
       </td>
     </tr>
@@ -100,7 +117,9 @@ const UsersTable = () => {
     <div {...sticky(NAV_HEIGHT)}>
       <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
     </div>
-    <table>
+    <table {...css({
+      borderCollapse: 'collapse'
+    })}>
       {header}
       <tbody>
         {rows(searchTerm)}
