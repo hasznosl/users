@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
-import NationalityContext from './NationalityContext';
-import NationalityChekbox from './NationalityCheckbox';
+import NationalityContext from '../contexts/NationalityContext';
+import NationalityChekbox from '../components/NationalityCheckbox';
+
+
+
 
 const Settings = () => {
 

@@ -2,12 +2,12 @@ import React, { useEffect, useState, useContext } from 'react'
 // import get from './mockApi';
 import axios from 'axios'
 import debounce from 'lodash/debounce'
-import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from './styles'
-import NationalityContext from './NationalityContext'
+import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from '../utils/styles'
+import NationalityContext from '../contexts/NationalityContext'
 import { css } from 'glamor'
-import UserModal from './UserModal'
-import nationalitiesToQueryString from './nationalitiesToQueryString'
-import isSelectedUser from './isSelectedUser'
+import UserModal from '../components/UserModal'
+import nationalitiesToQueryString from '../utils/nationalitiesToQueryString'
+import isSelectedUser from '../utils/isSelectedUser'
 
 
 const MAX_CATALOG_SIZE = 1000

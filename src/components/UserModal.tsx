@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactModal from 'react-modal';
-import { ROOT_ELEMENT_ID } from './styles';
+import { ROOT_ELEMENT_ID } from '../utils/styles';
 import InfoItem from './InfoItem';
 import { css } from 'glamor';
 
