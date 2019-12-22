@@ -11,9 +11,9 @@ const Settings = () => {
 
   return <div {...css({ width: 100, })}>
     {selectableNationalities.map(nat =>
-      <div {...css({ margin: '0px 10px 0px 10px', height: 30, })}>
+      <div {...css({ margin: '0px 10px 0px 10px', height: 30 })}
+        key={nat}>
         <NationalityChekbox
-          key={nat}
           nationality={nat}
           isChecked={checked(nat)}
           onSet={() => setNationalities(nationalities.filter(nationality => nationality !== nat))}

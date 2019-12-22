@@ -1,55 +1,22 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useState, } from 'react'
 // import get from './mockApi';
-import axios from 'axios'
-import debounce from 'lodash/debounce'
 import { sticky, NAV_HEIGHT, ROW_HEIGHT, positionRelative } from '../utils/styles'
-import NationalityContext from '../contexts/NationalityContext'
 import { css } from 'glamor'
 import UserModal from '../components/UserModal'
-import nationalitiesToQueryString from '../utils/nationalitiesToQueryString'
 import isSelectedUser from '../utils/isSelectedUser'
 
 
-const MAX_CATALOG_SIZE = 1000
-const NEXT_BATCH_SIZE = 50
+const UsersTable = ({ users, maxCatalogueSize, isLoading }: {
+  users: any[]
+  maxCatalogueSize: number
+  isLoading: boolean
+}) => {
 
-const UsersTable = () => {
-
-  const [users, setUsers] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [page, setPage] = useState(1)
-  const [isLoading, setIsLoading] = useState(true)
   const [userModalVisible, setUserModalVisible] = useState(false)
   const [userModalPositionX, setUserModalPositionX] = useState(0)
   const [userModalPositionY, setUserModalPositionY] = useState(0)
   const [userModalUser, setUserModalUser] = useState(null)
-
-  const { nationalities } = useContext(NationalityContext)
-
-  const getUsers = async (page: number) => {
-    if (users.length >= MAX_CATALOG_SIZE) {
-      return null
-    }
-    const response = await axios.get(`https://randomuser.me/api/?page=${page}
-    &results=${NEXT_BATCH_SIZE}
-    &seed=jggjghjkgj${
-      nationalitiesToQueryString(nationalities)}`) as any
-    setIsLoading(false)
-    const newUsers = [...users, ...response.data.results] as never[]
-    setUsers(newUsers)
-  }
-
-  window.onscroll = debounce(() => {
-    // todo this 0.9 can be improved
-    if (window.innerHeight + document.documentElement.scrollTop > document.documentElement.offsetHeight * 0.9) {
-      getUsers(page + 1)
-      setPage(page + 1)
-    }
-  }, 50)
-
-  useEffect(() => {
-    getUsers(page)
-  }, [])
 
 
   const header = <thead>
@@ -62,8 +29,8 @@ const UsersTable = () => {
     </tr>
   </thead>
 
-  const rows = (searchTerm: string) => users.filter((user: any) =>
-    `${user.name.first}${user.name.last}`.toLowerCase().includes(searchTerm.toLowerCase())
+  const rows = (searchTerm: string) => users.filter((user: any) => `${user.name.first}${user.name.last}`
+    .toLowerCase().includes(searchTerm.toLowerCase())
   ).map(
     (user: any) => <tr
       key={user.email + user.login.username}
@@ -126,7 +93,7 @@ const UsersTable = () => {
       </tbody>
     </table>
     {isLoading && <div>loading...</div>}
-    {users.length >= MAX_CATALOG_SIZE && <div>End of users catalog</div>}
+    {users.length >= maxCatalogueSize && <div>End of users catalog</div>}
   </div >
 }
 
