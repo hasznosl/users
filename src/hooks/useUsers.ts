@@ -11,6 +11,7 @@ const useUsers = ({ nationalities }: { nationalities: string[] }) => {
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [page, setPage] = useState(1)
+  const [scrollTop, setScrollTop] = useState(0)
   const fetchAndStoreUsers = async ({ page, shouldAppend }: { page: number, shouldAppend: boolean }) => {
     if (users.length >= maxCatalogueSize) {
       return null
@@ -22,12 +23,13 @@ const useUsers = ({ nationalities }: { nationalities: string[] }) => {
     setUsers(newUsers)
   }
 
-  const handleScroll = debounce(() => {
+  const handleScroll = () => {
+    setScrollTop(document.documentElement.scrollTop)
     if (window.innerHeight + document.documentElement.scrollTop > document.documentElement.offsetHeight * 0.9) {
       fetchAndStoreUsers({ page: page + 1, shouldAppend: true })
       setPage(page + 1)
     }
-  }, 50)
+  }
 
   window.onscroll = handleScroll
 
@@ -42,7 +44,7 @@ const useUsers = ({ nationalities }: { nationalities: string[] }) => {
   }, [nationalities])
 
   return {
-    users, setUsers, isLoading, maxCatalogueSize
+    users, setUsers, isLoading, maxCatalogueSize, scrollTop
   }
 }
 

@@ -1,7 +1,6 @@
 import React, { useState, } from 'react'
 import { sticky, positionRelative, blackBorder, SEARCH_MARGIN, SEARCH_HEIGHT, ROW_HEIGHT, NAV_WIDTH } from '../utils/styles'
 import { css } from 'glamor'
-import UserModal from '../components/UserModal'
 import UserRow from '../components/UserRow';
 import isSelectedUser from '../utils/isSelectedUser'
 
@@ -11,18 +10,16 @@ const loadingAnimation = (css as any).keyframes({
   '100%': { color: 'white' }
 })
 
-
-const UsersTable = ({ users, maxCatalogueSize, isLoading }: {
+const UsersTable = ({ users, maxCatalogueSize, isLoading, setSelectedUser, selectedUser, setUserModalVisible }: {
   users: any[]
   maxCatalogueSize: number
-  isLoading: boolean
+  isLoading: boolean,
+  setSelectedUser: (user: any) => void
+  selectedUser: any,
+  setUserModalVisible: (visible: boolean) => void
 }) => {
 
   const [searchTerm, setSearchTerm] = useState('')
-  const [userModalVisible, setUserModalVisible] = useState(false)
-  const [userModalPositionX, setUserModalPositionX] = useState(0)
-  const [userModalPositionY, setUserModalPositionY] = useState(0)
-  const [userModalUser, setUserModalUser] = useState(null)
 
   const headerCell = (label: string) => <div
     key={label} {...sticky(SEARCH_HEIGHT)}
@@ -51,24 +48,15 @@ const UsersTable = ({ users, maxCatalogueSize, isLoading }: {
     (user: any) => <UserRow
       user={user}
       key={user.email + user.login.username}
-      backgroundColor={isSelectedUser(userModalUser, user)
+      backgroundColor={isSelectedUser(selectedUser, user)
         ? '#F0F0F0' : 'white'}
       onClick={(e: any) => {
-        setUserModalPositionY(e.pageY)
-        setUserModalPositionX(e.pageX)
-        setUserModalUser(user)
+        setSelectedUser(user)
         setUserModalVisible(true)
       }} />
   )
 
   return <div {...positionRelative} >
-    <UserModal
-      positionX={userModalPositionX}
-      positionY={userModalPositionY}
-      setVisible={setUserModalVisible}
-      visible={userModalVisible}
-      user={userModalUser}
-    />
     <div {...sticky(0)} {...css({
       display: 'flex',
       flexDirection: 'row',
