@@ -10,27 +10,29 @@ const UserRow = ({
   user: any
   onClick: (e: any) => void
   backgroundColor: string
-}) => <tr
+}) => <div
   key={user.email + user.login.username}
   {...css({
-    cursor: 'pointer', backgroundColor
+    cursor: 'pointer',
+    backgroundColor,
+    display: 'table-row'
   })}
   onClick={onClick}>
-    <td {...blackBorder}>
+    <div {...blackBorder(true)} {...css({ display: 'table-cell' })}>
       <img src={user.picture.thumbnail} />
-    </td>
-    <td {...blackBorder}>
+    </div>
+    <div {...blackBorder(true)} {...css({ display: 'table-cell' })}>
       {user.name.first}
-    </td>
-    <td {...blackBorder}>
+    </div>
+    <div {...blackBorder(true)} {...css({ display: 'table-cell' })}>
       {user.name.last}
-    </td>
-    <td {...blackBorder}>
+    </div>
+    <div {...blackBorder(true)} {...css({ display: 'table-cell' })}>
       {user.login.username}
-    </td>
-    <td {...blackBorder}>
+    </div>
+    <div {...blackBorder(true)} {...css({ display: 'table-cell' })}>
       {user.email}
-    </td>
-  </tr>
+    </div>
+  </div>
 
 export default UserRow
