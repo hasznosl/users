@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import nationalitiesToQueryString from '../utils/nationalitiesToQueryString'
 import axios from 'axios'
-import debounce from 'lodash/debounce'
 
 export const maxCatalogueSize = 1000
 const NEXT_BATCH_SIZE = 50
