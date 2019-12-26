@@ -17,8 +17,15 @@ const Settings = () => {
         <NationalityChekbox
           nationality={nat}
           isChecked={checked(nat)}
-          onSet={() => setNationalities(nationalities.filter(nationality => nationality !== nat).sort())}
-          onUnset={() => setNationalities([...nationalities, nat].sort())}
+          onClick={
+            () => {
+              if (checked(nat)) {
+                setNationalities(nationalities.filter(nationality => nationality !== nat).sort())
+              } else {
+                setNationalities([...nationalities, nat].sort())
+              }
+            }
+          }
         />
       </div>
     )}
