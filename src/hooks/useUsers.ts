@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import fetchAndStoreUsers, { maxCatalogueSize } from "../utils/fetchAndStoreUsers";
 
+/**
+ * Hook to handle fetching users on scroll and setting loading state.
+ * 
+ * @param param0 {nationalities}: the nationalities that should be fetched
+ */
 const useUsers = ({ nationalities }: { nationalities: string[] }) => {
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)

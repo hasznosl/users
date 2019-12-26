@@ -10,6 +10,18 @@ const randomUsersUrl = (page: number, nationalities: string[]) =>
   &results=${NEXT_BATCH_SIZE}
   &seed=jggjghjkgj${nationalitiesToQueryString(nationalities)}`
 
+/**
+ * 
+ * @param param0: 
+ * page: page number of users to be fetched
+ * shouldAppend: if true then the fetched users will be appended to the so far fetched ones, if not, then replaced
+ * users: the so far fetched users
+ * nationalities: list of nationalities that shuold be fetched
+ * setUsers: hook to set the so far fetched users
+ * setIsLoading: hook to set the isLoading value
+ *
+ */
+
 const fetchAndStoreUsers = async ({
   page,
   shouldAppend,

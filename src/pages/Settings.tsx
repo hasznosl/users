@@ -6,6 +6,9 @@ import { ROW_HEIGHT } from '../utils/styles';
 
 const selectableNationalities = ['CH', 'FR', 'ES', 'GB']
 
+/**
+ * Component that shows the list of checkboxes to select nationalities to fetch.
+ */
 const Settings = () => {
   const { nationalities, setNationalities } = useContext(NationalityContext)
   const checked = (nat: string) => !!nationalities.find(nationality => nationality === nat)

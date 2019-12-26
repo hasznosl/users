@@ -9,10 +9,8 @@ import UserModal from './components/UserModal';
 import SelectedUserContext from './contexts/SelectedUserContext';
 import { maxCatalogueSize } from './utils/fetchAndStoreUsers';
 
-
 const UsersTable = loadable(() => import('./pages/UsersTable'))
 const Settings = loadable(() => import('./pages/Settings'))
-
 
 const App: React.FC = () => {
   const [nationalities, setNationalities] = useState([])
@@ -23,7 +21,6 @@ const App: React.FC = () => {
   return (
     <BrowserRouter >
       <div {...css({ display: 'flex', flexDirection: 'row', justifyContent: 'start' })}>
-
         <Navigation />
         <NationalityContext.Provider value={{ nationalities, setNationalities }}>
           <SelectedUserContext.Provider value={{ selectedUser, setSelectedUser: setSelectedUser as () => {} }}>

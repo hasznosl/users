@@ -10,12 +10,23 @@ const loadingAnimation = (css as any).keyframes({
   '100%': { color: 'white' }
 })
 
+/**
+ * Users table component renders the passed in users in a table format.
+ * 
+ */
+
 const UsersTable = ({
+  // users to show in the table
   users,
+  // maximum number of users to show. Show 'End of catalogue' string if this limit is reached
   maxCatalogueSize,
+  // if true then the table is showing an animated loading... string
   isLoading,
+  // hook to set the selected user that can be shown in the UserModal
   setSelectedUser,
+  // hook value representing the selected user that can be shown in the UserModal
   selectedUser,
+  // setter hook to set the user modal visible
   setUserModalVisible
 }: {
   users: IUserType[]
