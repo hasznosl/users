@@ -24,8 +24,7 @@ describe('NationalityCheckbox', () => {
       render(<NationalityCheckbox
         nationality="foo"
         isChecked={true}
-        onSet={() => { }}
-        onUnset={() => { }}
+        onClick={() => { }}
       />, container)
     })
 

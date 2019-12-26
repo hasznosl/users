@@ -10,12 +10,19 @@ const loadingAnimation = (css as any).keyframes({
   '100%': { color: 'white' }
 })
 
-const UsersTable = ({ users, maxCatalogueSize, isLoading, setSelectedUser, selectedUser, setUserModalVisible }: {
-  users: any[]
+const UsersTable = ({
+  users,
+  maxCatalogueSize,
+  isLoading,
+  setSelectedUser,
+  selectedUser,
+  setUserModalVisible
+}: {
+  users: IUserType[]
   maxCatalogueSize: number
   isLoading: boolean,
-  setSelectedUser: (user: any) => void
-  selectedUser: any,
+  setSelectedUser: (user: IUserType) => void
+  selectedUser: IUserType,
   setUserModalVisible: (visible: boolean) => void
 }) => {
 
@@ -42,15 +49,15 @@ const UsersTable = ({ users, maxCatalogueSize, isLoading, setSelectedUser, selec
   }
   </div>
 
-  const rows = (searchTerm: string) => users.filter((user: any) => `${user.name.first}${user.name.last}`
+  const rows = (searchTerm: string) => users.filter(user => `${user.name.first}${user.name.last}`
     .toLowerCase().includes(searchTerm.toLowerCase())
   ).map(
-    (user: any) => <UserRow
+    user => <UserRow
       user={user}
       key={user.email + user.login.username}
       backgroundColor={isSelectedUser(selectedUser, user)
         ? '#F0F0F0' : 'white'}
-      onClick={(e: any) => {
+      onClick={_ => {
         setSelectedUser(user)
         setUserModalVisible(true)
       }} />

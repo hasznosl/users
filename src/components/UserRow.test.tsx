@@ -29,7 +29,7 @@ describe('UserRow', () => {
       />, container)
     })
 
-    expect(container.textContent).toBe('firstNamelastNameusername')
+    expect(container.textContent).toBe('firstNamelastNameusernameemail')
 
   })
 })
