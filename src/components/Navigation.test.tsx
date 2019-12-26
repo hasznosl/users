@@ -1,34 +1,20 @@
 
 import React from 'react'
+import { render } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import Navigation from './Navigation';
-import { unmountComponentAtNode, render } from 'react-dom';
-import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 
-describe('Navigation', () => {
+test('renders user modal', async () => {
 
-  let container: any = null;
-  beforeEach(() => {
-    container = document.createElement("div");
-    document.body.appendChild(container);
-  });
+  const { getAllByRole } = render(
+    <BrowserRouter>
+      <Navigation />
+    </BrowserRouter>
+  )
+  expect(getAllByRole("link")[0]).toHaveTextContent("Home")
+  expect(getAllByRole("link")[0]).toHaveAttribute('href', '/')
 
-  afterEach(() => {
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-  });
-
-  it('should render', () => {
-
-    act(() => {
-      render(
-        <BrowserRouter >
-          <Navigation />
-        </BrowserRouter >, container)
-    })
-
-    expect(container.textContent).toBe('HomeSettings')
-
-  })
+  expect(getAllByRole("link")[1]).toHaveTextContent("Settings")
+  expect(getAllByRole("link")[1]).toHaveAttribute('href', '/settings')
 })

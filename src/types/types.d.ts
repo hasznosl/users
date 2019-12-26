@@ -13,5 +13,13 @@ interface IUserType {
   location: {
     street: string
   }
+}
+
+interface IRandomUsersResponseType {
+
+  data:
+  {
+    results: IUserType[]
+  }
 
 }

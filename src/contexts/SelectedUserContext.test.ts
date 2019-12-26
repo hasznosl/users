@@ -1,7 +1,7 @@
 import SelectedUserContext from './SelectedUserContext'
 
 describe('SelectedUserContext', () => {
-  it('should just pass for now', () => {
+  it('should be truthy', () => {
     expect(SelectedUserContext).toBeTruthy()
   })
 })

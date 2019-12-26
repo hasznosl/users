@@ -3,10 +3,11 @@ import { BrowserRouter, Switch, Route } from "react-router-dom"
 import { css } from 'glamor';
 import NationalityContext from './contexts/NationalityContext';
 import loadable from '@loadable/component'
-import useUsers, { maxCatalogueSize } from './hooks/useUsers';
+import useUsers from './hooks/useUsers';
 import Navigation from './components/Navigation'
 import UserModal from './components/UserModal';
 import SelectedUserContext from './contexts/SelectedUserContext';
+import { maxCatalogueSize } from './utils/fetchAndStoreUsers';
 
 
 const UsersTable = loadable(() => import('./pages/UsersTable'))
@@ -25,7 +26,7 @@ const App: React.FC = () => {
 
         <Navigation />
         <NationalityContext.Provider value={{ nationalities, setNationalities }}>
-          <SelectedUserContext.Provider value={{ selectedUser, setSelectedUser }}>
+          <SelectedUserContext.Provider value={{ selectedUser, setSelectedUser: setSelectedUser as () => {} }}>
             <Switch>
               <Route exact path="/">
                 <UserModal

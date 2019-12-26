@@ -7,7 +7,7 @@ const UserRow = ({
   onClick,
   backgroundColor
 }: {
-  user: any
+  user: IUserType
   onClick: (e: any) => void
   backgroundColor: string
 }) => <div

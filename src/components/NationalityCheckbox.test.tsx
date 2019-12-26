@@ -1,34 +1,32 @@
 
 import React from 'react'
+import { render } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import NationalityCheckbox from './NationalityCheckbox';
-import { unmountComponentAtNode, render } from 'react-dom';
-import { act } from 'react-dom/test-utils';
 
-describe('NationalityCheckbox', () => {
+test('renders correctly when checked', async () => {
 
-  let container: any = null;
-  beforeEach(() => {
-    container = document.createElement("div");
-    document.body.appendChild(container);
-  });
+  const { getByText, getByLabelText } = render(
+    <NationalityCheckbox
+      nationality="foo"
+      isChecked={true}
+      onClick={() => { }}
+    />
+  )
 
-  afterEach(() => {
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-  });
+  expect(getByText('foo')).toBeTruthy()
+  expect((getByLabelText('foo') as any)._valueTracker.getValue()).toBe("true")
+})
 
-  it('should render', () => {
 
-    act(() => {
-      render(<NationalityCheckbox
-        nationality="foo"
-        isChecked={true}
-        onClick={() => { }}
-      />, container)
-    })
+test('renders correctly when unchecked', async () => {
 
-    expect(container.textContent).toBe('foo')
-
-  })
+  const { getByText, getByLabelText } = render(
+    <NationalityCheckbox
+      nationality="foo"
+      isChecked={false}
+      onClick={() => { }}
+    />
+  )
+  expect((getByLabelText('foo') as any)._valueTracker.getValue()).toBe("false")
 })

@@ -1,14 +1,14 @@
 const userFixture = {
-  email: 'email',
-  name: { first: 'firstName', last: 'lastName' },
+  email: 'emily@foo.com',
+  name: { first: 'emily', last: 'test' },
   login: {
-    username: 'username'
+    username: 'emilytest13'
   },
   picture: {
-    thumbnail: 'thumbnail'
+    thumbnail: 'thumbnailemily'
   },
   location: {
-    street: 'street'
+    street: 'Emilia street'
   }
 }
 

@@ -42,11 +42,13 @@ const UsersTable = ({
     {label}
   </div>
 
-  const header = <div {...css({ display: 'table-row' })} >{
-    ['picture', 'first name', 'last name', 'username', 'email'].map(
-      label => headerCell(label)
-    )
-  }
+  const header = <div {...css({
+    display: 'table-row',
+  })} >{
+      ['picture', 'first name', 'last name', 'username', 'email'].map(
+        label => headerCell(label)
+      )
+    }
   </div>
 
   const rows = (searchTerm: string) => users.filter(user => `${user.name.first}${user.name.last}`
@@ -98,7 +100,7 @@ const UsersTable = ({
       justifyContent: 'center',
       alignItems: 'start'
     })}>
-      <div>
+      <div >
         {header}
         {rows(searchTerm)}
       </div>

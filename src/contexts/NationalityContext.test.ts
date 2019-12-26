@@ -1,7 +1,7 @@
 import NationalityContext from './NationalityContext'
 
 describe('NationalityContext', () => {
-  it('should just pass for now', () => {
+  it('should be truthy', () => {
     expect(NationalityContext).toBeTruthy()
   })
 })

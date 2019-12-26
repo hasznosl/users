@@ -1,33 +1,19 @@
 
 import React from 'react'
+import { render } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import InfoItem from './InfoItem';
-import { unmountComponentAtNode, render } from 'react-dom';
-import { act } from 'react-dom/test-utils';
 
-describe('InfoItem', () => {
+test('renders user modal', async () => {
 
-  let container: any = null;
-  beforeEach(() => {
-    container = document.createElement("div");
-    document.body.appendChild(container);
-  });
+  const { getByText } = render(
+    <InfoItem
+      label="foo"
+      value="bar"
+    />
+  )
 
-  afterEach(() => {
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-  });
+  expect(getByText('foo')).toBeTruthy()
+  expect(getByText('bar')).toBeTruthy()
 
-  it('should render', () => {
-
-    act(() => {
-      render(<InfoItem
-        label="foo"
-        value="bar"
-      />, container)
-    })
-
-    expect(container.textContent).toBe('foobar')
-
-  })
 })

@@ -6,10 +6,12 @@ import Settings from './Settings';
 
 test('renders', async () => {
 
-  const { getByText } = render(
+  const { getByLabelText } = render(
     <Settings />
   )
 
-  expect(getByText('CH')).toBeTruthy()
-
+  expect(getByLabelText('CH')).toBeTruthy()
+  expect(getByLabelText('FR')).toBeTruthy()
+  expect(getByLabelText('GB')).toBeTruthy()
+  expect(getByLabelText('ES')).toBeTruthy()
 })
