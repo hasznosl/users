@@ -5,6 +5,9 @@ const userFixture = {
   },
   picture: {
     thumbnail: 'thumbnail'
+  },
+  location: {
+    street: 'street'
   }
 }
 

@@ -4,7 +4,7 @@ import { ROOT_ELEMENT_ID } from '../utils/styles';
 import InfoItem from './InfoItem';
 import { css } from 'glamor';
 
-ReactModal.setAppElement(`#${ROOT_ELEMENT_ID}`);
+if (process.env.NODE_ENV !== 'test') ReactModal.setAppElement(`#${ROOT_ELEMENT_ID}`);
 
 const UserModal = ({
   positionX, positionY, visible, setVisible, user
