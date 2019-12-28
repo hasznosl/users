@@ -23,23 +23,22 @@ const App: React.FC = () => {
       <div {...css({ display: 'flex', flexDirection: 'row', justifyContent: 'start' })}>
         <Navigation />
         <NationalityContext.Provider value={{ nationalities, setNationalities }}>
-          <SelectedUserContext.Provider value={{ selectedUser, setSelectedUser: setSelectedUser as () => {} }}>
+          <SelectedUserContext.Provider value={{
+            selectedUser,
+            setSelectedUser: setSelectedUser as () => {},
+            userModalVisible,
+            setUserModalVisible
+          }}>
             <Switch>
               <Route exact path="/">
                 <UserModal
                   positionX={900}
                   positionY={scrollTop + 160}
-                  setVisible={setUserModalVisible}
-                  visible={userModalVisible}
-                  user={selectedUser}
                 />
                 <UsersTable
                   users={users}
                   isLoading={isLoading}
-                  maxCatalogueSize={maxCatalogueSize}
-                  selectedUser={selectedUser}
-                  setSelectedUser={setSelectedUser}
-                  setUserModalVisible={setUserModalVisible} />
+                  maxCatalogueSize={maxCatalogueSize} />
               </Route>
               <Route exact path="/settings">
                 <Settings />

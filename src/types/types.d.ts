@@ -11,8 +11,13 @@ interface IUserType {
     thumbnail: string
   },
   location: {
-    street: string
-  }
+    street: { name: string }
+    city: string,
+    state: string,
+    postcode: string,
+  },
+  phone: string,
+  cell: string
 }
 
 interface IRandomUsersResponseType {

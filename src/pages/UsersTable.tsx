@@ -1,8 +1,9 @@
-import React, { useState, } from 'react'
+import React, { useState, useContext, } from 'react'
 import { sticky, positionRelative, blackBorder, SEARCH_MARGIN, SEARCH_HEIGHT, ROW_HEIGHT, NAV_WIDTH } from '../utils/styles'
 import { css } from 'glamor'
 import UserRow from '../components/UserRow';
 import isSelectedUser from '../utils/isSelectedUser'
+import SelectedUserContext from '../contexts/SelectedUserContext';
 
 const loadingAnimation = (css as any).keyframes({
   '0%': { color: 'white' },
@@ -22,22 +23,16 @@ const UsersTable = ({
   maxCatalogueSize,
   // if true then the table is showing an animated loading... string
   isLoading,
-  // hook to set the selected user that can be shown in the UserModal
-  setSelectedUser,
-  // hook value representing the selected user that can be shown in the UserModal
-  selectedUser,
-  // setter hook to set the user modal visible
-  setUserModalVisible
 }: {
   users: IUserType[]
   maxCatalogueSize: number
   isLoading: boolean,
-  setSelectedUser: (user: IUserType) => void
-  selectedUser: IUserType,
   setUserModalVisible: (visible: boolean) => void
 }) => {
 
   const [searchTerm, setSearchTerm] = useState('')
+  const { selectedUser, setSelectedUser, setUserModalVisible } = useContext(SelectedUserContext)
+
 
   const headerCell = (label: string) => <div
     key={label} {...sticky(SEARCH_HEIGHT)}
