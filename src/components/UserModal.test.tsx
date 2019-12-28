@@ -5,18 +5,23 @@ import '@testing-library/jest-dom/extend-expect'
 import UserModal from './UserModal';
 import userFixture from '../test/userFixture';
 import ReactModal from 'react-modal';
+import SelectedUserContext from '../contexts/SelectedUserContext';
 
 test('renders', async () => {
   ReactModal.setAppElement(document.createElement('div'));
 
   const { getByRole, getByText } = render(
-    <UserModal
-      positionX={0}
-      positionY={0}
-      setVisible={() => { }}
-      visible={true}
-      user={userFixture}
-    />
+    <SelectedUserContext.Provider value={{
+      userModalVisible: true,
+      setSelectedUser: () => { },
+      setUserModalVisible: () => { },
+      selectedUser: userFixture
+    }}>
+      <UserModal
+        positionX={0}
+        positionY={0}
+      />
+    </SelectedUserContext.Provider>
   )
 
   expect(getByText('street')).toBeTruthy()

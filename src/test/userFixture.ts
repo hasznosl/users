@@ -1,4 +1,4 @@
-const userFixture = {
+const userFixture: IUserType = {
   email: 'emily@foo.com',
   name: { first: 'emily', last: 'test' },
   login: {
@@ -8,8 +8,13 @@ const userFixture = {
     thumbnail: 'thumbnailemily'
   },
   location: {
-    street: 'Emilia street'
-  }
+    street: { name: 'Emilia street' },
+    city: 'Emilia City',
+    postcode: '12345',
+    state: 'Emilia state'
+  },
+  phone: '0000',
+  cell: '111'
 }
 
 export default userFixture

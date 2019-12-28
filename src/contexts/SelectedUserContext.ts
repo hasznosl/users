@@ -1,7 +1,7 @@
 import React from 'react'
 
 const SelectedUserContext = React.createContext({
-  selectedUser: null,
+  selectedUser: null as unknown as IUserType,
   setSelectedUser: (user: IUserType) => { },
   setUserModalVisible: (visible: boolean) => { },
   userModalVisible: false,
