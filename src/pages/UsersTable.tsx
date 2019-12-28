@@ -1,5 +1,5 @@
 import React, { useState, useContext, } from 'react'
-import { sticky, positionRelative, blackBorder, SEARCH_MARGIN, SEARCH_HEIGHT, NAV_WIDTH } from '../utils/styles'
+import { sticky, positionRelative, SEARCH_MARGIN, SEARCH_HEIGHT, NAV_WIDTH } from '../utils/styles'
 import { css } from 'glamor'
 import UserRow from '../components/UserRow';
 import isSelectedUser from '../utils/isSelectedUser'
@@ -92,9 +92,16 @@ const UsersTable = ({
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'start'
+      alignItems: 'start',
+      minWidth: 900,
+      width: '40vw'
     })}>
-      <div >
+      <div {...css({
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: 900,
+        width: '40vw'
+      })}>
         {rows(searchTerm)}
       </div>
       {users.length >= maxCatalogueSize && <div>End of users catalog</div>}

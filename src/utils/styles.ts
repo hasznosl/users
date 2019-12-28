@@ -19,3 +19,9 @@ export const blackBorder = (skipTopLeft = false) => {
 
 export const SEARCH_MARGIN = 20
 export const SEARCH_HEIGHT = 60
+
+export const getTableCellFlexProperties = (flexNumber: number) => ({
+  flex: flexNumber,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis'
+})
