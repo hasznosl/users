@@ -1,5 +1,5 @@
 import React, { useState, useContext, } from 'react'
-import { sticky, positionRelative, blackBorder, SEARCH_MARGIN, SEARCH_HEIGHT, ROW_HEIGHT, NAV_WIDTH } from '../utils/styles'
+import { sticky, positionRelative, blackBorder, SEARCH_MARGIN, SEARCH_HEIGHT, NAV_WIDTH } from '../utils/styles'
 import { css } from 'glamor'
 import UserRow from '../components/UserRow';
 import isSelectedUser from '../utils/isSelectedUser'
@@ -33,43 +33,31 @@ const UsersTable = ({
   const [searchTerm, setSearchTerm] = useState('')
   const { selectedUser, setSelectedUser, setUserModalVisible } = useContext(SelectedUserContext)
 
+  const rows = (searchTerm: string) => [
+    // first element represents the header
+    null
+    ,
+    // actual users
+    ...users.filter(user => `${user.name.first}${user.name.last}`
+      .toLowerCase().includes(searchTerm.toLowerCase())
+    )].map(
+      (user, index) => {
+        const isHeader = index === 0
 
-  const headerCell = (label: string) => <div
-    key={label} {...sticky(SEARCH_HEIGHT)}
-    {...blackBorder(true)}
-    {...css({
-      backgroundColor: 'white',
-      display: 'table-cell',
-      verticalAlign: 'middle',
-      height: ROW_HEIGHT,
-      borderTop: '1px solid black',
-      minWidth: 50,
-    })}>
-    {label}
-  </div>
-
-  const header = <div {...css({
-    display: 'table-row',
-  })} >{
-      ['picture', 'first name', 'last name', 'username', 'email'].map(
-        label => headerCell(label)
-      )
-    }
-  </div>
-
-  const rows = (searchTerm: string) => users.filter(user => `${user.name.first}${user.name.last}`
-    .toLowerCase().includes(searchTerm.toLowerCase())
-  ).map(
-    user => <UserRow
-      user={user}
-      key={user.email + user.login.username}
-      backgroundColor={isSelectedUser(selectedUser, user)
-        ? '#F0F0F0' : 'white'}
-      onClick={_ => {
-        setSelectedUser(user)
-        setUserModalVisible(true)
-      }} />
-  )
+        return <UserRow
+          rowIndex={index}
+          user={user}
+          key={isHeader ? 'header' : user ? user.email : '' + (user ? (user as IUserType).login.username : '')}
+          backgroundColor={isSelectedUser(selectedUser, user)
+            ? '#F0F0F0' : 'white'}
+          onClick={isHeader ?
+            undefined :
+            (_) => {
+              setSelectedUser(user!)
+              setUserModalVisible(true)
+            }} />
+      }
+    )
 
   return <div {...positionRelative} >
     <div {...sticky(0)} {...css({
@@ -107,7 +95,6 @@ const UsersTable = ({
       alignItems: 'start'
     })}>
       <div >
-        {header}
         {rows(searchTerm)}
       </div>
       {users.length >= maxCatalogueSize && <div>End of users catalog</div>}
